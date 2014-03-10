@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+    
+    <!-- Progress -->
+    <LinearLayout
+        android:id="@+id/signup_status"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:visibility="gone" >
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp" />
+
+        <TextView
+            android:id="@+id/signup_status_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/signup_progress_signing_up"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+    </LinearLayout>
+    
+    <!-- Signup form -->
+    <ScrollView
+	    android:id="@+id/signup_form"
+	    android:layout_width="match_parent"
+	    android:layout_height="match_parent" >
+        
+	    <LinearLayout 
+	        android:orientation="vertical"
+	        android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center" >
+			
+	        <EditText
+	            android:id="@+id/email"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text"
+	            android:hint="@string/email"
+	            android:maxLines="1"
+	            android:singleLine="true"
+	            android:tag="email" />
+	        
+	        <EditText
+	            android:id="@+id/login"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="text"
+	            android:hint="@string/username"
+	            android:maxLines="1"
+	            android:singleLine="true"
+	            android:tag="login" />
+	
+	        <EditText
+	            android:id="@+id/password"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:inputType="textPassword"
+	            android:hint="@string/password"
+	            android:maxLines="1"
+	            android:singleLine="true"
+	            android:tag="password" />
+
+	        <Button
+	            android:id="@+id/signup_button"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="16dp"
+	            android:paddingLeft="32dp"
+	            android:paddingRight="32dp"
+	            android:text="@string/signup" />
+
+	        <TextView
+	            android:id="@+id/error_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text=""
+	            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+	    </LinearLayout>
+	</ScrollView>
+    
+</LinearLayout>
