@@ -61,7 +61,7 @@ Read this documentation to learn how these 3 components can be used to easily ad
 
 ## Log In
 
-### Create a fragment
+#### Create a fragment
 
 Start with creating a new layout called `fragment_login`. The layout should include text fields for username and password, a login button, a progress loader, and a text for displaying errors.
 
@@ -132,7 +132,7 @@ The code should now look something like this:
         }
     }
     
-### Add the fragment to your main activity
+#### Add the fragment to your main activity
 
 The login fragment is ready, add it to your main activity's layout:
 
@@ -150,7 +150,7 @@ The login fragment is ready, add it to your main activity's layout:
 
 Also create a main fragment that will be shown after a successful login.
 
-### Attach the login screen to the session
+#### Attach the login screen to the session
 
 And last we will add the code to show/hide the right fragments; the login fragment when the user needs to log in, 
 and the main fragment when the user has logged in. In your `MainActivity` class, begin with creating instances of `UserApp.Session` and `UserApp.UIHelper`.
@@ -189,7 +189,7 @@ Also make sure to call `uiHelper.onResume()` and `uiHelper.onPause()` in the eve
         }
     }
 
-### Try it
+#### Try it
 
 If you run your app you will see the login screen. If you log in you will either see an error message or you will see the main fragment. The session will be permanently stored and is remembered until you manually log out.
 
