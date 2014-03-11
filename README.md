@@ -1,7 +1,7 @@
 UserApp SDK for Android
 =======================
 
-This SDK adds user authentication and management to your app with [UserApp](https://www.userapp.io). Then easily integrate your users with MailChimp, SendGrid, Mixpanel, etc. with just one click.
+This SDK adds user authentication and management to your Android app with [UserApp](https://www.userapp.io). Then easily integrate your users with MailChimp, SendGrid, Mixpanel, etc. with just one click.
 
 **Android Min SDK Version:** 11  
 **Android Target SDK Version:** 19
