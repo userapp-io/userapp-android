@@ -35,6 +35,26 @@ Request Internet access in your manifest file, for example:
         ...
     </manifest>
 
+## Intro
+
+This SDK integrates your Android app with UserApp by adding logic for authentication such as login and signup. It also keeps track of sessions, the logged in user, etc.
+
+The SDK is focused on the use of fragments to show a login or signup form to the user when he/she is not logged in. And will automatically show it based on the session state. It also takes care of setting up persistent sessions so the user only would have to login once.
+
+There are 3 main parts of this SDK that you should know about:
+
+1. **UserApp.Session**
+  
+  This class takes care of everything related to the session; login, logout, events, etc. This should be created as an instance variable and have a life cycle of `onPause()` and `onResume()`.
+
+2. **UserApp.UIHelper**
+
+  This class helps you to show/hide the right fragment. It connects to your session and listens for state changes and show the login fragment when the user needs to log in. It can be created using the `session.createUIHelper()` which will automatically bind it to your session.
+  
+3. **AuthFragment**
+  
+To facilitate the creation of login and signup forms, this class can be extended to take care of the most of your bindings to UserApp. It has a few events that can be overriden to take more control over it.
+
 ## Log In
 
 The login screen must be placed within a fragment inside your main activity.
