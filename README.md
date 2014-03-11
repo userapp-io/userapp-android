@@ -153,24 +153,24 @@ Also make sure to call `uiHelper.onResume()` and `uiHelper.onPause()` in the eve
 	
         @Override
         protected void onCreate(Bundle savedInstanceState) {
-	    super.onCreate(savedInstanceState);
-	    setContentView(R.layout.activity_main);
+            super.onCreate(savedInstanceState);
+            setContentView(R.layout.activity_main);
 		
-	    // Initiate the session and create a new UI helper bound to it
-	    session = new UserApp.Session(this);
-	    uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment);
+            // Initiate the session and create a new UI helper bound to it
+            session = new UserApp.Session(this);
+            uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment);
         }
 	
         @Override
         public void onResume() {
-	    super.onResume();
-	    uiHelper.onResume();
+            super.onResume();
+            uiHelper.onResume();
         }
 
         @Override
         public void onPause() {
-	    super.onPause();
-	    uiHelper.onPause();
+            super.onPause();
+            uiHelper.onPause();
         }
     }
 
