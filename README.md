@@ -57,7 +57,7 @@ There are 3 main parts of this SDK that you should know about:
   
   To facilitate the creation of login and signup forms, this class can be extended to take care of the most of your bindings to UserApp. It has a few functions that can be overridden to take more control over it.
 
-Read this documentation to learn how these 3 components can be used to easily add user authentication to your Android app. Take a look at the demo app if there's any doubts on how to use the SDK.
+Read this documentation to learn how these 3 components can be used to easily add user authentication to your Android app. Take a look at the [demo app](https://github.com/userapp-io/userapp-android/tree/master/Demo) if there's any doubts on how to use the SDK.
 
 ## Log In
 
@@ -431,7 +431,7 @@ If you want to save a new user (i.e. "sign up"), just create a new `User` object
 
 #### Callback events
 
-When you save a user, all the user callbacks will be called (see *Reload User Profile*).
+When you save a user, all the user callbacks will be called (see [Reload User Profile](#reload-user-profile)).
 
 ## Check Permissions
 
@@ -459,7 +459,7 @@ If you have multiple activities in your project, you would need to listen for se
 
 ## Example
 
-See [example/](https://github.com/userapp-io/userapp-ember/tree/master/example) for a demo app based on the Ember Starter Kit and Bootstrap.
+See [Demo/](https://github.com/userapp-io/userapp-android/tree/master/Demo) for a demo app with login, social login with Facebook, signup, etc.
 
 ## Help
 
