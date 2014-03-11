@@ -19,12 +19,12 @@ Download and include the [userapp-android.jar](https://github.com/userapp-io/use
 
 Open your `AndroidManifest.xml` and add your UserApp App Id like this:
 
-    ```xml
-    <application ... >
-        <meta-data android:name="userapp.AppId" android:value="YOUR-APP-ID" />
-        ...
-    </application>
-    ```
+```xml
+<application ... >
+    <meta-data android:name="userapp.AppId" android:value="YOUR-APP-ID" />
+    ...
+</application>
+```
 
 [How do I find my App Id?](https://help.userapp.io/customer/portal/articles/1322336-how-do-i-find-my-app-id-)
 
@@ -32,12 +32,12 @@ Open your `AndroidManifest.xml` and add your UserApp App Id like this:
 
 Request Internet access in your manifest file, for example:
 
-    ```xml
-    <manifest ... >
-        <uses-permission android:name="android.permission.INTERNET" />
-        ...
-    </manifest>
-    ```
+```xml
+<manifest ... >
+    <uses-permission android:name="android.permission.INTERNET" />
+    ...
+</manifest>
+```
 
 ## Intro
 
@@ -75,9 +75,9 @@ Then create a new fragment called `LoginFragment` that extends
 Now you need to bind the form to UserApp by calling the method `setupLoginForm()` on the superclass. Place this
 code in the `onCreateView` function:
 
-    ```java
-    super.setupLoginForm(view, R.id.login, R.id.password, R.id.login_button);
-    ```
+```java
+super.setupLoginForm(view, R.id.login, R.id.password, R.id.login_button);
+```
 
 The first parameter is the view of the fragment, the second is the username field ID, then the password field ID, and last the ID of the login button. 
 
@@ -85,61 +85,63 @@ Optionally, override the methods `onLoginStart` and `onLoginCompleted` to show e
 
 **The code should now look something like this:**
 
-    ```java
-    public class LoginFragment extends AuthFragment {
-    	@Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            View view = inflater.inflate(R.layout.fragment_signup, container, false);
-            
-            // Setup the login form with bindings to UserApp
-            super.setupLoginForm(view, R.id.login, R.id.password, R.id.login_button);
-            
-            return view;
-        }
+```java
+public class LoginFragment extends AuthFragment {
+	@Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+        
+        // Setup the login form with bindings to UserApp
+        super.setupLoginForm(view, R.id.login, R.id.password, R.id.login_button);
+        
+        return view;
+    }
 
-        @Override
-        public Boolean onLoginStart(String login, String password, Boolean isSocialLogin) {
-            // Show loader when waiting for server
-            getView().findViewById(R.id.login_form).setVisibility(View.GONE);
-            getView().findViewById(R.id.login_status).setVisibility(View.VISIBLE);
-    	
-            // Return true to complete the login
-            return true;
-        }
-    
-        @Override
-        public void onLoginCompleted(Boolean authenticated, Exception exception) {
-            // Hide the loader
-            getView().findViewById(R.id.login_form).setVisibility(View.VISIBLE);
-            getView().findViewById(R.id.login_status).setVisibility(View.GONE);
-		
-            if (exception != null) {
-                // Show an error message
-                ((TextView) getView().findViewById(R.id.error_text)).setText(exception.getMessage());
-            } else {
-                // Clear the message
-                ((TextView) getView().findViewById(R.id.error_text)).setText("");
-            }
+    @Override
+    public Boolean onLoginStart(String login, String password, Boolean isSocialLogin) {
+        // Show loader when waiting for server
+        getView().findViewById(R.id.login_form).setVisibility(View.GONE);
+        getView().findViewById(R.id.login_status).setVisibility(View.VISIBLE);
+	
+        // Return true to complete the login
+        return true;
+    }
+
+    @Override
+    public void onLoginCompleted(Boolean authenticated, Exception exception) {
+        // Hide the loader
+        getView().findViewById(R.id.login_form).setVisibility(View.VISIBLE);
+        getView().findViewById(R.id.login_status).setVisibility(View.GONE);
+	
+        if (exception != null) {
+            // Show an error message
+            ((TextView) getView().findViewById(R.id.error_text)).setText(exception.getMessage());
+        } else {
+            // Clear the message
+            ((TextView) getView().findViewById(R.id.error_text)).setText("");
         }
     }
-    ```
+}
+```
     
 #### Add the fragment to your main activity
 
 The login fragment is ready, add it to your main activity's layout:
 
-    <RelativeLayout ... >
-        <fragment
-            android:id="@+id/loginFragment"
-            android:name="com.example.demo.LoginFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" />
+```xml
+<RelativeLayout ... >
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.demo.LoginFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
-        ...
-    </RelativeLayout>
+    ...
+</RelativeLayout>
+```
 
 Also create a main fragment that will be shown after a successful login.
 
@@ -154,57 +156,61 @@ Then call the method `session.createUIHelper()` in `onCreate`, which takes the l
 
 Also make sure to call `uiHelper.onResume()` and `uiHelper.onPause()` in the events as the example below.
 
-    public class MainActivity extends FragmentActivity {
-        // Instances for session and its UI helper
-        UserApp.Session session;
-        UserApp.UIHelper uiHelper;
-	
-        @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.activity_main);
-		
-            // Initiate the session and create a new UI helper bound to it
-            session = new UserApp.Session(this);
-            uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment);
-        }
-	
-        @Override
-        public void onResume() {
-            super.onResume();
-            uiHelper.onResume();
-        }
+```java
+public class MainActivity extends FragmentActivity {
+    // Instances for session and its UI helper
+    UserApp.Session session;
+    UserApp.UIHelper uiHelper;
 
-        @Override
-        public void onPause() {
-            super.onPause();
-            uiHelper.onPause();
-        }
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+    
+        // Initiate the session and create a new UI helper bound to it
+        session = new UserApp.Session(this);
+        uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        uiHelper.onResume();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        uiHelper.onPause();
+    }
+}
+```
 
 ## Log Out
 
 When you've got login to work, you probably want to have the option to log out. All you have to do is to call the method `session.logout()`. Here's an example of a logout menu in the `MainActivity` class:
 
-    public class MainActivity extends FragmentActivity {
-        UserApp.Session session;
-        ...
-	
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle presses on the action bar items
-            switch (item.getItemId()) {
-                // Logout action
-                case R.id.action_logout:
-                    session.logout();
-	            return true;
-                default:
-                    return super.onOptionsItemSelected(item);
-            }
+```java
+public class MainActivity extends FragmentActivity {
+    UserApp.Session session;
+    ...
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle presses on the action bar items
+        switch (item.getItemId()) {
+            // Logout action
+            case R.id.action_logout:
+                session.logout();
+            return true;
+            default:
+                return super.onOptionsItemSelected(item);
         }
-        
-        ...
     }
+    
+    ...
+}
+```
 
 This will automatically end the session and show the login fragment. If you have multiple activities you will need to show the main activity after you called `session.logout()`.
 
@@ -214,35 +220,39 @@ If you rather want your users logging in with their social account (or both), it
 
 Start by adding a new button to your login fragment layout:
 
-    <LinearLayout ... >
-        ...
+```xml
+<LinearLayout ... >
+    ...
 
-        <Button
-            android:id="@+id/facebook_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="32dp"
-            android:paddingRight="32dp"
-            android:text="Log In With Facebook" />
+    <Button
+        android:id="@+id/facebook_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp"
+        android:text="Log In With Facebook" />
 
-        ...
-    </LinearLayout>
+    ...
+</LinearLayout>
+```
 
 Then go to your `LoginFragment` class and call `super.setupSocialLogin()` from `onCreateView`. The first argument is the view, the second is the button ID you want to attach, and the third is the Provider Id of the provider your want to attach, e.g. `"facebook"`.
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_login, container, false);
-        
-        ...
-        
-        // Attach the Facebook button
-        super.setupSocialLogin(view, R.id.facebook_button, "facebook");
+```java
+@Override
+public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // Inflate the layout for this fragment
+    View view = inflater.inflate(R.layout.fragment_login, container, false);
+    
+    ...
+    
+    // Attach the Facebook button
+    super.setupSocialLogin(view, R.id.facebook_button, "facebook");
 
-        return view;
-    }
+    return view;
+}
+```
     
 [All supported providers...](https://app.userapp.io/#/docs/concepts/#social-login)
 
@@ -267,95 +277,101 @@ Optionally, override the methods `onSignupStart` and `onSignupCompleted` to show
 
 **The code should now look something like this:**
 
-    public class SignupFragment extends AuthFragment {
-	
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            // Inflate the layout for this fragment
-            View view = inflater.inflate(R.layout.fragment_signup, container, false);
-        
-            // Setup the login form with bindings to UserApp
-            super.setupSignupForm(view, R.id.signup_button, R.id.email, R.id.login, R.id.password);
-        
-            return view;
-        }
+```java
+public class SignupFragment extends AuthFragment {
+    
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_signup, container, false);
+    
+        // Setup the login form with bindings to UserApp
+        super.setupSignupForm(view, R.id.signup_button, R.id.email, R.id.login, R.id.password);
+    
+        return view;
+    }
 
-        @Override
-        public User onSignupStart(User user) {
-            // Show loader when waiting for server
-            getView().findViewById(R.id.signup_form).setVisibility(View.GONE);
-            getView().findViewById(R.id.signup_status).setVisibility(View.VISIBLE);
-	    	
-            // Set subscription
-            user.subscription = new Subscription();
-            user.subscription.price_list_id = "IEiVxVpxSxy1xE8oIzsSeA";
-            user.subscription.plan_id = "CBPJdFORQ-qsefa7LxrX-A";
-	    	
-            // Set age property
-            user.properties.put("age", new Property(42, true));
-	    
-            // Return the user to complete the signup
-            return user;
-        }
-	    
-        @Override
-        public void onSignupCompleted(User user, Boolean verified, Exception exception) {
-            if (exception != null) {
+    @Override
+    public User onSignupStart(User user) {
+        // Show loader when waiting for server
+        getView().findViewById(R.id.signup_form).setVisibility(View.GONE);
+        getView().findViewById(R.id.signup_status).setVisibility(View.VISIBLE);
+        
+        // Set subscription
+        user.subscription = new Subscription();
+        user.subscription.price_list_id = "IEiVxVpxSxy1xE8oIzsSeA";
+        user.subscription.plan_id = "CBPJdFORQ-qsefa7LxrX-A";
+        
+        // Set age property
+        user.properties.put("age", new Property(42, true));
+    
+        // Return the user to complete the signup
+        return user;
+    }
+    
+    @Override
+    public void onSignupCompleted(User user, Boolean verified, Exception exception) {
+        if (exception != null) {
+            // Hide the loader
+            getView().findViewById(R.id.signup_form).setVisibility(View.VISIBLE);
+            getView().findViewById(R.id.signup_status).setVisibility(View.GONE);
+
+            // Show an error message
+            ((TextView) getView().findViewById(R.id.error_text)).setText(exception.getMessage());
+        } else {
+            // Clear the error message
+            ((TextView) getView().findViewById(R.id.error_text)).setText("");
+
+            // Need to verify the email address?
+            if (verified == false) {
                 // Hide the loader
                 getView().findViewById(R.id.signup_form).setVisibility(View.VISIBLE);
                 getView().findViewById(R.id.signup_status).setVisibility(View.GONE);
-
-                // Show an error message
-                ((TextView) getView().findViewById(R.id.error_text)).setText(exception.getMessage());
+                
+                ((TextView) getView().findViewById(R.id.error_text)).setText("An email has been sent to your inbox.");
             } else {
-                // Clear the error message
-                ((TextView) getView().findViewById(R.id.error_text)).setText("");
-
-                // Need to verify the email address?
-                if (verified == false) {
-                    // Hide the loader
-                    getView().findViewById(R.id.signup_form).setVisibility(View.VISIBLE);
-                    getView().findViewById(R.id.signup_status).setVisibility(View.GONE);
-					
-                    ((TextView) getView().findViewById(R.id.error_text)).setText("An email has been sent to your inbox.");
-                } else {
-                    // Call the superclass to log in the signed up user
-                    super.onSignupCompleted(user, verified, exception);
-                }
+                // Call the superclass to log in the signed up user
+                super.onSignupCompleted(user, verified, exception);
             }
         }
-
     }
+
+}
+```
 
 #### Add the fragment to your main activity
 
 The signup fragment is ready, add it to your main activity's layout:
 
-    <RelativeLayout ... >
-        <fragment
-            android:id="@+id/signupFragment"
-            android:name="com.example.demo.SignupFragment"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentTop="true" />
+```xml
+<RelativeLayout ... >
+    <fragment
+        android:id="@+id/signupFragment"
+        android:name="com.example.demo.SignupFragment"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" />
 
-        ...
-    </RelativeLayout>
+    ...
+</RelativeLayout>
+```
 
 #### Make sure it gets hidden after signup/login
 
 Now go to your main activity and add it to the `createUIHelper` arguments (this will hide it when the login or main fragment is shown):
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        
-        // Initiate the session and create a new UI helper bound to it
-        session = new UserApp.Session(this);
-        uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment, R.id.signupFragment);
-    }
+```java
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    
+    // Initiate the session and create a new UI helper bound to it
+    session = new UserApp.Session(this);
+    uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment, R.id.signupFragment);
+}
+```
 
 You would need to add a link from the login fragment so your users would be able to access your signup screen. 
 See the demo app for an example on how to do that.
@@ -368,14 +384,16 @@ To connect your Android app to a back-end API, use `session.current.token` to ge
 
 Sometimes it would be good to know when a user logs in or logs out. One use-case would be in the main fragment to update the UI with the user's name.
 
-    session = new UserApp.Session(this.getActivity(), new UserApp.Session.StatusCallback() {
-	    @Override
-	    public void call(Boolean authenticated, Exception exception) {
-	        if (authenticated) {
-	            ((TextView) view.findViewById(R.id.welcome_text)).setText("Welcome " + session.user.first_name);
-	        }
-	    }
-	});
+```java
+session = new UserApp.Session(this.getActivity(), new UserApp.Session.StatusCallback() {
+    @Override
+    public void call(Boolean authenticated, Exception exception) {
+        if (authenticated) {
+            ((TextView) view.findViewById(R.id.welcome_text)).setText("Welcome " + session.user.first_name);
+        }
+    }
+});
+```
 
 You can also use `session.addCallback()` to add more callbacks.
 
@@ -387,29 +405,33 @@ This will also be called when the app starts and the user has already logged in 
 
 The user profile is cached locally at login, but you can easily reload it by calling:
 
-    session.reloadUser(new UserApp.Session.UserCallback() {
-	    @Override
-	    public void call(User user, Exception exception) {
-	        if (exception == null) {
-	        	((TextView) view.findViewById(R.id.welcome_text)).setText("Welcome " + user.first_name);
-	        } else {
-	        	System.out.println("ERROR LOADING USER: " + exception.getMessage());
-	        }
-	    }
-	});
+```java
+session.reloadUser(new UserApp.Session.UserCallback() {
+    @Override
+    public void call(User user, Exception exception) {
+        if (exception == null) {
+            ((TextView) view.findViewById(R.id.welcome_text)).setText("Welcome " + user.first_name);
+        } else {
+            System.out.println("ERROR LOADING USER: " + exception.getMessage());
+        }
+    }
+});
+```
 
 You can also listen for profile update events with a callback:
 
-    session.addUserCallback(new UserApp.Session.UserCallback() {
-        @Override
-        public void call(User user, Exception exception) {
-            if (exception == null) {
-                ...
-            } else {
-                ...
-            }
+```java
+session.addUserCallback(new UserApp.Session.UserCallback() {
+    @Override
+    public void call(User user, Exception exception) {
+        if (exception == null) {
+            ...
+        } else {
+            ...
         }
-    });
+    }
+});
+```
 
 ## Save User Profile
 
@@ -417,21 +439,23 @@ You can also listen for profile update events with a callback:
 
 If you want to change and save the user's profile, make the changes in the user object and then call `session.save()` to save it, like this:
 
-    // Save user changes
-    session.user.first_name = "John";
-    session.user.properties.get("age").value = 34;
-    session.user.properties.get("age").override = true;
+```java
+// Save user changes
+session.user.first_name = "John";
+session.user.properties.get("age").value = 34;
+session.user.properties.get("age").override = true;
 
-    session.saveUser(session.user, new UserApp.Session.UserCallback() {
-        @Override
-        public void call(User user, Exception exception) {
-            if (exception == null) {
-                System.out.println("USER SAVED");
-            } else {
-                System.out.println("ERROR SAVING USER: " + exception.getMessage());
-            }
+session.saveUser(session.user, new UserApp.Session.UserCallback() {
+    @Override
+    public void call(User user, Exception exception) {
+        if (exception == null) {
+            System.out.println("USER SAVED");
+        } else {
+            System.out.println("ERROR SAVING USER: " + exception.getMessage());
         }
-    });
+    }
+});
+```
 
 #### Save a new user
 
@@ -445,11 +469,13 @@ When you save a user, all the user callbacks will be called (see [Reload User Pr
 
 To check if a logged in user has a specific set of permissions, use this code:
 
-    if (session.hasPermission("admin")) {
-        // Is admin
-    } else {
-        // Is not admin
-    }
+```java
+if (session.hasPermission("admin")) {
+    // Is admin
+} else {
+    // Is not admin
+}
+```
 
 You can also check for features using `session.hasFeature()`. Use a space delimited string to insert multiple permissions or features.
 
@@ -459,7 +485,9 @@ You can also check for features using `session.hasFeature()`. Use a space delimi
 
 When a user has logged in you probably want to personalize their experience. Use the session object to get the logged in user's profile.
 
-    User user = session.user;
+```java
+User user = session.user;
+```
 
 ## Multiple Activities
 
