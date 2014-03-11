@@ -77,27 +77,27 @@ The first parameter is the view of the fragment, the second is the username fiel
 
 Optionally, override the methods `onLoginStart` and `onLoginCompleted` to show error messages and a progress loader.
 
-The code should now look something like this:
+**The code should now look something like this:**
 
     public class LoginFragment extends AuthFragment {
     	@Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
             // Inflate the layout for this fragment
             View view = inflater.inflate(R.layout.fragment_signup, container, false);
-
+            
             // Setup the login form with bindings to UserApp
             super.setupLoginForm(view, R.id.login, R.id.password, R.id.login_button);
-
+            
             return view;
         }
 
         @Override
         public Boolean onLoginStart(String login, String password, Boolean isSocialLogin) {
-    	    // Show loader when waiting for server
-    	    getView().findViewById(R.id.login_form).setVisibility(View.GONE);
-    	    getView().findViewById(R.id.login_status).setVisibility(View.VISIBLE);
+            // Show loader when waiting for server
+            getView().findViewById(R.id.login_form).setVisibility(View.GONE);
+            getView().findViewById(R.id.login_status).setVisibility(View.VISIBLE);
     	
-    	    // Return true to complete the login
+            // Return true to complete the login
             return true;
         }
     
@@ -173,10 +173,6 @@ Also make sure to call `uiHelper.onResume()` and `uiHelper.onPause()` in the eve
 	    uiHelper.onPause();
         }
     }
-
-#### Try it
-
-If you run your app you will see the login screen. If you log in you will either see an error message or you will see the main fragment. The session will be permanently stored and is remembered until you manually log out.
 
 ## Log Out
 
@@ -261,7 +257,7 @@ The first parameter is the view of the fragment, the second is the signup button
 
 Optionally, override the methods `onSignupStart` and `onSignupCompleted` to show error messages and a progress loader. `onSignupStart` can also be used to fill the user profile with additional information before submitting.
 
-The code should now look something like this:
+**The code should now look something like this:**
 
     public class SignupFragment extends AuthFragment {
 	
