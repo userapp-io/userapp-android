@@ -527,4 +527,4 @@ Contact us via email at support@userapp.io or visit our [support center](https:/
 
 ## License
 
-MIT, see LICENSE.
+MIT, see [LICENSE](https://github.com/userapp-io/userapp-android/blob/master/LICENSE).
