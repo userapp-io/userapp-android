@@ -75,22 +75,7 @@ code in the `onCreateView` function:
 
 The first parameter is the view of the fragment, the second is the username field ID, then the password field ID, and last the ID of the login button. 
 
-Override the methods `onLoginStart` and `onLoginCompleted` to show error messages and a progress loader (optional).
-
-    @Override
-    public Boolean onLoginStart(String login, String password, Boolean isSocialLogin) {
-        // Called before login, e.g. show the loader here
-        ...
-
-        // Return true to complete the login
-        return true;
-    }
-    
-    @Override
-    public void onLoginCompleted(Boolean authenticated, Exception exception) {
-        // Called after login, e.g. hide the loader here and display errors
-        ...
-    }
+Optionally, override the methods `onLoginStart` and `onLoginCompleted` to show error messages and a progress loader.
 
 The code should now look something like this:
 
@@ -200,12 +185,6 @@ When you've got login to work, you probably want to have the option to log out. 
     public class MainActivity extends FragmentActivity {
         UserApp.Session session;
         ...
-
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            getMenuInflater().inflate(R.menu.main, menu);
-            return true;
-        }
 	
         @Override
         public boolean onOptionsItemSelected(MenuItem item) {
@@ -260,10 +239,14 @@ Then go to your `LoginFragment` class and call `super.setupSocialLogin()` from `
 
         ...
     }
+    
+[All supported providers...](https://app.userapp.io/#/docs/concepts/#social-login)
 
 ## Sign Up
 
 Great, login is done! But users may still want to sign up the regular way, without using their social network accounts. This is easily fixed with a new fragment, just as with the login fragment.
+
+#### Create a fragment
 
 Start with creating a new layout called `fragment_signup`. Add 3 text boxes; one for username, one for name, one for email, and one for password. Use `android:tag` to specify which field it should be mapped to, e.g. `android:tag="password"`. Also create a button and a progress loader.
 
@@ -276,46 +259,7 @@ Now you need to bind the form to UserApp by calling the method `setupSignupForm(
 
 The first parameter is the view of the fragment, the second is the signup button field ID, then the IDs of all the input fields. 
 
-Override the methods `onSignupStart` and `onSignupCompleted` to show error messages and a progress loader. `onSignupStart` can also be used
-to fill the user profile with additional information before submitting.
-
-    @Override
-    public User onSignupStart(User user) {
-    	// Show loader when waiting for server
-    	...
-    	
-    	// Alter the user profile here
-    	...
-    
-    	// Return the user to complete the signup
-    	return user;
-    }
-    
-    @Override
-    public void onSignupCompleted(User user, Boolean verified, Exception exception) {
-		if (exception != null) {
-			// Hide the loader
-			...
-			
-			// Show an error message
-			...
-		} else {
-			// Clear the error message
-			...
-			
-			// Need to verify the email address?
-			if (verified == false) {
-				// Hide the loader
-				...
-				
-				// Show message that an email has been sent to be verified
-				...
-			} else {
-				// Call the superclass to log in the signed up user
-				super.onSignupCompleted(user, verified, exception);
-			}
-		}
-	}
+Optionally, override the methods `onSignupStart` and `onSignupCompleted` to show error messages and a progress loader. `onSignupStart` can also be used to fill the user profile with additional information before submitting.
 
 The code should now look something like this:
 
@@ -333,52 +277,54 @@ The code should now look something like this:
         }
 
         @Override
-		public User onSignupStart(User user) {
-	    	// Show loader when waiting for server
-	    	getView().findViewById(R.id.signup_form).setVisibility(View.GONE);
-	    	getView().findViewById(R.id.signup_status).setVisibility(View.VISIBLE);
+        public User onSignupStart(User user) {
+            // Show loader when waiting for server
+            getView().findViewById(R.id.signup_form).setVisibility(View.GONE);
+            getView().findViewById(R.id.signup_status).setVisibility(View.VISIBLE);
 	    	
-	    	// Set subscription
-	    	user.subscription = new Subscription();
-	    	user.subscription.price_list_id = "IEiVxVpxSxy1xE8oIzsSeA";
-	    	user.subscription.plan_id = "CBPJdFORQ-qsefa7LxrX-A";
+            // Set subscription
+            user.subscription = new Subscription();
+            user.subscription.price_list_id = "IEiVxVpxSxy1xE8oIzsSeA";
+            user.subscription.plan_id = "CBPJdFORQ-qsefa7LxrX-A";
 	    	
-	    	// Set age property
-	    	user.properties.put("age", new Property(42, true));
+            // Set age property
+            user.properties.put("age", new Property(42, true));
 	    
-	    	// Return the user to complete the signup
-	    	return user;
-	    }
+            // Return the user to complete the signup
+            return user;
+        }
 	    
-		@Override
-		public void onSignupCompleted(User user, Boolean verified, Exception exception) {
-			if (exception != null) {
-				// Hide the loader
-				getView().findViewById(R.id.signup_form).setVisibility(View.VISIBLE);
-				getView().findViewById(R.id.signup_status).setVisibility(View.GONE);
-				
-				// Show an error message
-				((TextView) getView().findViewById(R.id.error_text)).setText(exception.getMessage());
-			} else {
-				// Clear the error message
-				((TextView) getView().findViewById(R.id.error_text)).setText("");
-				
-				// Need to verify the email address?
-				if (verified == false) {
-					// Hide the loader
-					getView().findViewById(R.id.signup_form).setVisibility(View.VISIBLE);
-					getView().findViewById(R.id.signup_status).setVisibility(View.GONE);
+        @Override
+        public void onSignupCompleted(User user, Boolean verified, Exception exception) {
+            if (exception != null) {
+                // Hide the loader
+                getView().findViewById(R.id.signup_form).setVisibility(View.VISIBLE);
+                getView().findViewById(R.id.signup_status).setVisibility(View.GONE);
+
+                // Show an error message
+                ((TextView) getView().findViewById(R.id.error_text)).setText(exception.getMessage());
+            } else {
+                // Clear the error message
+                ((TextView) getView().findViewById(R.id.error_text)).setText("");
+
+                // Need to verify the email address?
+                if (verified == false) {
+                    // Hide the loader
+                    getView().findViewById(R.id.signup_form).setVisibility(View.VISIBLE);
+                    getView().findViewById(R.id.signup_status).setVisibility(View.GONE);
 					
-					((TextView) getView().findViewById(R.id.error_text)).setText("An email has been sent to your inbox.");
-				} else {
-					// Call the superclass to log in the signed up user
-					super.onSignupCompleted(user, verified, exception);
-				}
-			}
-		}
+                    ((TextView) getView().findViewById(R.id.error_text)).setText("An email has been sent to your inbox.");
+                } else {
+                    // Call the superclass to log in the signed up user
+                    super.onSignupCompleted(user, verified, exception);
+                }
+            }
+        }
 
     }
-    
+
+#### Add the fragment to your main activity
+
 The signup fragment is ready, add it to your main activity's layout:
 
     <RelativeLayout ... >
@@ -393,17 +339,19 @@ The signup fragment is ready, add it to your main activity's layout:
         ...
     </RelativeLayout>
 
+#### Make sure it gets hidden after signup/login
+
 Now go to your main activity and add it to the `createUIHelper` arguments (this will hide it when the login or main fragment is shown):
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-		
-		// Initiate the session and create a new UI helper bound to it
-		session = new UserApp.Session(this);
-		uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment, R.id.signupFragment);
-	}
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        
+        // Initiate the session and create a new UI helper bound to it
+        session = new UserApp.Session(this);
+        uiHelper = session.createUIHelper(R.id.loginFragment, R.id.mainFragment, R.id.signupFragment);
+    }
 
 You would need to add a link from the login fragment so your users would be able to access your signup screen. 
 See the demo app for an example on how to do that.
@@ -449,36 +397,43 @@ The user profile is cached locally at login, but you can easily reload it by cal
 You can also listen for profile update events with a callback:
 
     session.addUserCallback(new UserApp.Session.UserCallback() {
-	    @Override
-	    public void call(User user, Exception exception) {
-	        if (exception == null) {
-	        	...
-	        } else {
-	        	...
-	        }
-	    }
-	});
+        @Override
+        public void call(User user, Exception exception) {
+            if (exception == null) {
+                ...
+            } else {
+                ...
+            }
+        }
+    });
 
 ## Save User Profile
+
+#### Save the current user
 
 If you want to change and save the user's profile, make the changes in the user object and then call `session.save()` to save it, like this:
 
     // Save user changes
     session.user.first_name = "John";
-	session.user.properties.get("age").value = 34;
-	session.user.properties.get("age").override = true;
-	session.saveUser(session.user, new UserApp.Session.UserCallback() {
-	    @Override
-	    public void call(User user, Exception exception) {
-	        if (exception == null) {
-	        	System.out.println("USER SAVED");
-	        } else {
-	        	System.out.println("ERROR SAVING USER: " + exception.getMessage());
-	        }
-	    }
-	});
+    session.user.properties.get("age").value = 34;
+    session.user.properties.get("age").override = true;
+
+    session.saveUser(session.user, new UserApp.Session.UserCallback() {
+        @Override
+        public void call(User user, Exception exception) {
+            if (exception == null) {
+                System.out.println("USER SAVED");
+            } else {
+                System.out.println("ERROR SAVING USER: " + exception.getMessage());
+            }
+        }
+    });
+
+#### Save a new user
 
 If you want to save a new user (i.e. "sign up"), just create a new `User` object and leave `user_id` empty and then save it.
+
+#### Callback events
 
 When you save a user, all the user callbacks will be called (see *Reload User Profile*).
 
@@ -487,10 +442,10 @@ When you save a user, all the user callbacks will be called (see *Reload User Pr
 To check if a logged in user has a specific set of permissions, use this code:
 
     if (session.hasPermission("admin")) {
-		// Is admin
-	} else {
-		// Is not admin
-	}
+        // Is admin
+    } else {
+        // Is not admin
+    }
 
 You can also check for features using `session.hasFeature()`. Use a space delimited string to insert multiple permissions or features.
 
