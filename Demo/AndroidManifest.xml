@@ -29,7 +29,7 @@
             android:label="@string/title_activity_main_fragment" >
         </activity>
         
-        <meta-data android:name="userapp.AppId" android:value="52b8a5d2dca15" />
+        <meta-data android:name="userapp.AppId" android:value="YOUR-APP-ID" />
     </application>
     
 </manifest>
