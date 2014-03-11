@@ -269,7 +269,9 @@ Create a new fragment called `SignupFragment` that extends
 
 Now you need to bind the form to UserApp by calling the method `setupSignupForm()` on the superclass:
 
-    super.setupSignupForm(view, R.id.signup_button, R.id.email, R.id.login, R.id.password);
+```java
+super.setupSignupForm(view, R.id.signup_button, R.id.email, R.id.login, R.id.password);
+```
 
 The first parameter is the view of the fragment, the second is the signup button field ID, then the IDs of all the input fields. 
 
