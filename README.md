@@ -41,6 +41,8 @@ This SDK integrates your Android app with UserApp by adding logic for authentica
 
 The SDK is focused on the use of fragments to show a login or signup form to the user when he/she is not logged in. And will automatically show it based on the session state. It also takes care of setting up persistent sessions so the user only would have to login once.
 
+The authentication fragments should be placed inside your main activity.
+
 There are 3 main parts of this SDK that you should know about:
 
 1. **UserApp.Session**
@@ -53,11 +55,11 @@ There are 3 main parts of this SDK that you should know about:
   
 3. **AuthFragment**
   
-To facilitate the creation of login and signup forms, this class can be extended to take care of the most of your bindings to UserApp. It has a few events that can be overriden to take more control over it.
+To facilitate the creation of login and signup forms, this class can be extended to take care of the most of your bindings to UserApp. It has a few events that can be overridden to take more control over it.
+
+Read this documentation to learn how these 3 components can be used to easily add user authentication to your Android app. Take a look at the demo app if there's any doubts on how to use the SDK.
 
 ## Log In
-
-The login screen must be placed within a fragment inside your main activity.
 
 Start with creating a new layout called `fragment_login`. The layout should include text fields for username and password, a login button, a progress loader, and a text for displaying errors.
 
