@@ -61,6 +61,8 @@ Read this documentation to learn how these 3 components can be used to easily ad
 
 ## Log In
 
+### Create a fragment
+
 Start with creating a new layout called `fragment_login`. The layout should include text fields for username and password, a login button, a progress loader, and a text for displaying errors.
 
 Then create a new fragment called `LoginFragment` that extends
@@ -130,6 +132,8 @@ The code should now look something like this:
         }
     }
     
+### Add the fragment to your main activity
+
 The login fragment is ready, add it to your main activity's layout:
 
     <RelativeLayout ... >
@@ -146,16 +150,10 @@ The login fragment is ready, add it to your main activity's layout:
 
 Also create a main fragment that will be shown after a successful login.
 
+### Attach the login screen to the session
+
 And last we will add the code to show/hide the right fragments; the login fragment when the user needs to log in, 
-and the main fragment when the user has logged in. In your `MainActivity` class, begin with creating instances of `UserApp.Session and `UserApp.UIHelper`.
-
-Create a new session instance:
-
-    UserApp.Session session;
-    
-Create a new UIHelper instance:
-
-    UserApp.UIHelper uiHelper;
+and the main fragment when the user has logged in. In your `MainActivity` class, begin with creating instances of `UserApp.Session` and `UserApp.UIHelper`.
 
 These should be placed as instance variables in the class, and you should call `session.onResume()` and `session.onPause()` in the activity's or fragment's life cycle events. In this case you will be using the UIHelper and then you will call these methods on that object instead (see below).
 
@@ -190,6 +188,8 @@ Also make sure to call `uiHelper.onResume()` and `uiHelper.onPause()` in the eve
 	    uiHelper.onPause();
         }
     }
+
+### Try it
 
 If you run your app you will see the login screen. If you log in you will either see an error message or you will see the main fragment. The session will be permanently stored and is remembered until you manually log out.
 
