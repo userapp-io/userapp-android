@@ -3,6 +3,23 @@ UserApp SDK for Android
 
 This SDK adds user authentication and management to your app with [UserApp](https://www.userapp.io). Then easily integrate your users with MailChimp, SendGrid, Mixpanel, etc. with just one click.
 
+* [Getting Started](#getting-started)
+* [Intro](#intro)
+* [Log In](#log-in)
+* [Log Out](#log-out)
+* [Social Login (OAuth)](#social-login)
+* [Sign Up](#sign-up)
+* [Back-end](#back-end)
+* [State Changes](#state-changes)
+* [Reload User Profile](#reload-user-profile)
+* [Save User Profile](#save-user-profile)
+* [Check Permissions](#check-permissions)
+* [Personalization](#personalization)
+* [Multiple Activities](#multiple-activities)
+* [Example](#example)
+* [Help](#help)  
+* [License](#license)
+
 ## Getting Started
 
 **Download the SDK**
