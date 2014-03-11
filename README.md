@@ -19,10 +19,12 @@ Download and include the [userapp-android.jar](https://github.com/userapp-io/use
 
 Open your `AndroidManifest.xml` and add your UserApp App Id like this:
 
+    ```xml
     <application ... >
         <meta-data android:name="userapp.AppId" android:value="YOUR-APP-ID" />
         ...
     </application>
+    ```
 
 [How do I find my App Id?](https://help.userapp.io/customer/portal/articles/1322336-how-do-i-find-my-app-id-)
 
@@ -30,10 +32,12 @@ Open your `AndroidManifest.xml` and add your UserApp App Id like this:
 
 Request Internet access in your manifest file, for example:
 
+    ```xml
     <manifest ... >
         <uses-permission android:name="android.permission.INTERNET" />
         ...
     </manifest>
+    ```
 
 ## Intro
 
@@ -71,7 +75,9 @@ Then create a new fragment called `LoginFragment` that extends
 Now you need to bind the form to UserApp by calling the method `setupLoginForm()` on the superclass. Place this
 code in the `onCreateView` function:
 
+    ```java
     super.setupLoginForm(view, R.id.login, R.id.password, R.id.login_button);
+    ```
 
 The first parameter is the view of the fragment, the second is the username field ID, then the password field ID, and last the ID of the login button. 
 
@@ -79,6 +85,7 @@ Optionally, override the methods `onLoginStart` and `onLoginCompleted` to show e
 
 **The code should now look something like this:**
 
+    ```java
     public class LoginFragment extends AuthFragment {
     	@Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -116,6 +123,7 @@ Optionally, override the methods `onLoginStart` and `onLoginCompleted` to show e
             }
         }
     }
+    ```
     
 #### Add the fragment to your main activity
 
@@ -233,7 +241,7 @@ Then go to your `LoginFragment` class and call `super.setupSocialLogin()` from `
         // Attach the Facebook button
         super.setupSocialLogin(view, R.id.facebook_button, "facebook");
 
-        ...
+        return view;
     }
     
 [All supported providers...](https://app.userapp.io/#/docs/concepts/#social-login)
