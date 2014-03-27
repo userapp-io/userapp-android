@@ -402,7 +402,7 @@ See the demo app for an example on how to do that.
 
 ## Back-end
 
-To connect your Android app to a back-end API, use `session.current.token` to get the session token and send that along with all HTTP requests. And then on the back-end, get that token and use UserApp's [token.heartbeat()](https://app.userapp.io/#/docs/token/#heartbeat) or [user.get()](https://app.userapp.io/#/docs/user/#get) to verify that the user is authenticated. The result should then be cached to reduce round-trips to UserApp.
+To connect your Android app to a back-end API, use `session.token` to get the session token and send that along with all HTTP requests. And then on the back-end, get that token and use UserApp's [token.heartbeat()](https://app.userapp.io/#/docs/token/#heartbeat) or [user.get()](https://app.userapp.io/#/docs/user/#get) to verify that the user is authenticated. The result should then be cached to reduce round-trips to UserApp.
 
 ## State Changes
 

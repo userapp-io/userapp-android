@@ -65,6 +65,7 @@ public class UserApp {
 		private Boolean isBroadcaster = false; // If this instance is the one broadcasting an event
 		private Boolean isAuthenticated = false; // Is the session authenticated or not?
 		public User user; // The logged in user
+		public String token; // Session token
 		
 		/** Receiver for login events */
 		private BroadcastReceiver loginReceiver = new BroadcastReceiver() {
@@ -954,6 +955,8 @@ public class UserApp {
 			UserAppClient.ClientOptions options = api.getOptions();
 			options.token = token;
 			api.setOptions(options);
+			
+			this.token = token;
 		}
 	}
 	
